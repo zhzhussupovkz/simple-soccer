@@ -17,5 +17,9 @@ class Team
   def draw
     @players.each do |e| e.draw end
   end
+
+  def update
+    @players.each do |e| e.move end
+  end
   
 end

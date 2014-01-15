@@ -21,5 +21,10 @@ class World
     @left.draw
     @right.draw
   end
+
+  def update
+    @left.update
+    @right.update
+  end
   
 end
