@@ -9,28 +9,19 @@ class Player
 
   def initialize window, team, x, y, role
     @window, @team, @x, @y, @role = window, team, x, y, role
-    @angle, @me, @turn = 90, false, 0
+    @angle, @me = 90, false
     @image = Gosu::Image.new(window, "images/teams/"+ @team +".png", true)
-    @ui = Gosu::Font.new(window, 'Monaco', 20)
   end
 
   attr_reader :window, :x, :y, :me
 
   def draw
     @image.draw_rot x, y, 2, @angle
-    @ui.draw("angle: #{angle}", 10, 10, 3)
   end
 
   #angle
   def angle
-    @turn += 1 if @angle % 360 == 0
-    if @angle >= 0 && @angle <= 360
-      @angle
-    elsif @angle > 360
-      360 - @angle * @turn
-    elsif @angle < 0
-      360 - (360 + @angle) * @turn
-    end
+    @angle % 360
   end
 
   #turn left
@@ -45,28 +36,28 @@ class Player
 
   #main move - user control when his with ball
   def move
-    #if me
-    turn_left if window.button_down? Gosu::KbLeft
-    turn_right if window.button_down? Gosu::KbRight
-    run if window.button_down? Gosu::KbUp
-    #end
+    if me
+      turn_left if window.button_down? Gosu::KbLeft
+      turn_right if window.button_down? Gosu::KbRight
+      run if window.button_down? Gosu::KbUp
+    end
   end
 
   #run
   def run
     case face
     when 'first'
-      @x += 5*Math.sin(angle)
-      @y -= 5*Math.cos(angle)
+      @x += 5*Math.sin(Math::PI * angle / 180)
+      @y -= 5*Math.cos(Math::PI * angle / 180)
     when 'second'
-      @x -= 5*Math.sin(360 - angle)
-      @y -= 5*Math.cos(360 - angle)
+      @x -= 5*Math.sin(2*Math::PI - Math::PI * angle / 180)
+      @y -= 5*Math.cos(2*Math::PI - Math::PI * angle / 180)
     when 'third'
-      @x -= 5*Math.sin(angle - 180)
-      @y += 5*Math.cos(angle - 180)
-    when 'four'
-      @x += 5*Math.sin(180 - angle)
-      @y += 5*Math.cos(180 - angle)
+      @x -= 5*Math.sin(Math::PI * angle / 180 - Math::PI)
+      @y += 5*Math.cos(Math::PI * angle / 180 - Math::PI)
+    when 'fourth'
+      @x += 5*Math.sin(Math::PI - Math::PI * angle / 180)
+      @y += 5*Math.cos(Math::PI - Math::PI * angle / 180)
     end
   end
 

@@ -12,7 +12,7 @@ class Team
     @players = []
   end
 
-  attr_reader :name
+  attr_reader :name, :players
 
   def draw
     @players.each do |e| e.draw end
