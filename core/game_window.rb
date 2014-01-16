@@ -14,6 +14,8 @@ class GameWindow < Gosu::Window
     self.caption = "Soccer Game"
     @world = World.new self
   end
+
+  attr_reader :world
   
   def draw
     @world.draw

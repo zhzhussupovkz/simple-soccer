@@ -14,6 +14,8 @@ class World
     @left = LeftTeam.new window, 'spain'
     @right = RightTeam.new window, 'brazil'
   end
+
+  attr_reader :ball
   
   def draw
     @ground.draw(0, 0, 1)

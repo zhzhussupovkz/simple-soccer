@@ -21,5 +21,21 @@ class LeftTeam < Team
     @players << Player.new(@window, @name, 250, 450, 'midfielder')
     @players << Player.new(@window, @name, 350, 300, 'forward')
   end
+
+  #set player with ball
+  def set_main_player
+    min = @players[0]
+    dist = Gosu::distance(min.x, min.y, @window.world.ball.x, @window.world.ball.y)
+    @players.each do |e|
+      min = e if Gosu::distance(e.x, e.y, @window.world.ball.x, @window.world.ball.y) <= dist
+    end
+    @players.each do |e| e.without_ball end
+    min.with_ball
+  end
+
+  def update
+    super
+    set_main_player
+  end
   
 end
