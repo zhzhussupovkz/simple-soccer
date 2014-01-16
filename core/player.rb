@@ -47,17 +47,17 @@ class Player
   def run
     case face
     when 'first'
-      @x += 5*Math.sin(Math::PI * angle / 180)
-      @y -= 5*Math.cos(Math::PI * angle / 180)
+      @x += 5*Math.sin(Math::PI * angle / 180) if @x <= 790
+      @y -= 5*Math.cos(Math::PI * angle / 180) if @y >= 5
     when 'second'
-      @x -= 5*Math.sin(2*Math::PI - Math::PI * angle / 180)
-      @y -= 5*Math.cos(2*Math::PI - Math::PI * angle / 180)
+      @x -= 5*Math.sin(2*Math::PI - Math::PI * angle / 180) if @x >= 5
+      @y -= 5*Math.cos(2*Math::PI - Math::PI * angle / 180) if @y >= 5
     when 'third'
-      @x -= 5*Math.sin(Math::PI * angle / 180 - Math::PI)
-      @y += 5*Math.cos(Math::PI * angle / 180 - Math::PI)
+      @x -= 5*Math.sin(Math::PI * angle / 180 - Math::PI) if @x >= 5
+      @y += 5*Math.cos(Math::PI * angle / 180 - Math::PI) if @y <= 590
     when 'fourth'
-      @x += 5*Math.sin(Math::PI - Math::PI * angle / 180)
-      @y += 5*Math.cos(Math::PI - Math::PI * angle / 180)
+      @x += 5*Math.sin(Math::PI - Math::PI * angle / 180) if @x <= 790
+      @y += 5*Math.cos(Math::PI - Math::PI * angle / 180) if @y <= 585
     end
   end
 
