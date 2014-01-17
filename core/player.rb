@@ -40,6 +40,7 @@ class Player
       turn_left if window.button_down? Gosu::KbLeft
       turn_right if window.button_down? Gosu::KbRight
       run if window.button_down? Gosu::KbUp
+      run_with_ball if window.button_down? Gosu::KbUp
     end
   end
 
@@ -58,6 +59,35 @@ class Player
     when 'fourth'
       @x += 5*Math.sin(Math::PI - Math::PI * angle / 180) if @x <= 790
       @y += 5*Math.cos(Math::PI - Math::PI * angle / 180) if @y <= 585
+    end
+  end
+
+  #run with ball
+  def run_with_ball
+    ball = window.world.ball
+    if Gosu::distance(ball.x, ball.y, x, y) <= 10
+      case face
+      when 'first'
+        if x <= ball.x && y >= ball.y
+          ball.x += 5*Math.sin(Math::PI * angle / 180) if ball.x <= 790
+          ball.y -= 5*Math.cos(Math::PI * angle / 180) if ball.y >= 5
+        end
+      when 'second'
+        if x >= ball.x && y >= ball.y
+          ball.x -= 5*Math.sin(2*Math::PI - Math::PI * angle / 180) if ball.x >= 5
+          ball.y -= 5*Math.cos(2*Math::PI - Math::PI * angle / 180) if ball.y >= 5
+        end
+      when 'third'
+        if x >= ball.x && y <= ball.y
+          ball.x -= 5*Math.sin(Math::PI * angle / 180 - Math::PI) if ball.x >= 5
+          ball.y += 5*Math.cos(Math::PI * angle / 180 - Math::PI) if ball.y <= 590
+        end
+      when 'fourth'
+        if x <= ball.x && y <= ball.y
+          ball.x += 5*Math.sin(Math::PI - Math::PI * angle / 180) if ball.x <= 790
+          ball.y += 5*Math.cos(Math::PI - Math::PI * angle / 180) if ball.y <= 585
+        end
+      end
     end
   end
 

@@ -16,7 +16,7 @@ class World
   end
 
   attr_reader :ball
-  
+
   def draw
     @ground.draw(0, 0, 1)
     @ball.draw
