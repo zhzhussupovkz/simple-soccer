@@ -10,7 +10,6 @@ class LeftTeam < Team
   def initialize window, name
     super window, name, "left"
     generate_players
-    @main = @players[0]
   end
 
   def generate_players
@@ -32,7 +31,6 @@ class LeftTeam < Team
     end
     @players.each do |e| e.without_ball end
     min.with_ball
-    @main = min
   end
 
   def update

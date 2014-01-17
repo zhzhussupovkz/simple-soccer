@@ -13,7 +13,8 @@ class Player
     @image = Gosu::Image.new(window, "images/teams/"+ @team +".png", true)
   end
 
-  attr_reader :window, :x, :y, :me
+  attr_reader :window, :me
+  attr_accessor :x, :y
 
   def draw
     @image.draw_rot x, y, 2, @angle
@@ -40,7 +41,7 @@ class Player
       turn_left if window.button_down? Gosu::KbLeft
       turn_right if window.button_down? Gosu::KbRight
       run if window.button_down? Gosu::KbUp
-      run_with_ball if window.button_down? Gosu::KbUp
+      run_with_ball
     end
   end
 
@@ -48,17 +49,13 @@ class Player
   def run
     case face
     when 'first'
-      @x += 5*Math.sin(Math::PI * angle / 180) if @x <= 790
-      @y -= 5*Math.cos(Math::PI * angle / 180) if @y >= 5
+      move_first self, 5
     when 'second'
-      @x -= 5*Math.sin(2*Math::PI - Math::PI * angle / 180) if @x >= 5
-      @y -= 5*Math.cos(2*Math::PI - Math::PI * angle / 180) if @y >= 5
+      move_second self, 5
     when 'third'
-      @x -= 5*Math.sin(Math::PI * angle / 180 - Math::PI) if @x >= 5
-      @y += 5*Math.cos(Math::PI * angle / 180 - Math::PI) if @y <= 590
+      move_third self, 5
     when 'fourth'
-      @x += 5*Math.sin(Math::PI - Math::PI * angle / 180) if @x <= 790
-      @y += 5*Math.cos(Math::PI - Math::PI * angle / 180) if @y <= 585
+      move_fourth self, 5
     end
   end
 
@@ -69,26 +66,50 @@ class Player
       case face
       when 'first'
         if x <= ball.x && y >= ball.y
-          ball.x += 5*Math.sin(Math::PI * angle / 180) if ball.x <= 790
-          ball.y -= 5*Math.cos(Math::PI * angle / 180) if ball.y >= 5
+         move_first ball, 5
+         move_first ball, 100 if window.button_down? Gosu::KbD
         end
       when 'second'
         if x >= ball.x && y >= ball.y
-          ball.x -= 5*Math.sin(2*Math::PI - Math::PI * angle / 180) if ball.x >= 5
-          ball.y -= 5*Math.cos(2*Math::PI - Math::PI * angle / 180) if ball.y >= 5
+          move_second ball, 5
+          move_second ball, 100 if window.button_down? Gosu::KbD
         end
       when 'third'
         if x >= ball.x && y <= ball.y
-          ball.x -= 5*Math.sin(Math::PI * angle / 180 - Math::PI) if ball.x >= 5
-          ball.y += 5*Math.cos(Math::PI * angle / 180 - Math::PI) if ball.y <= 590
+          move_third ball, 5
+          move_third ball, 100 if window.button_down? Gosu::KbD
         end
       when 'fourth'
         if x <= ball.x && y <= ball.y
-          ball.x += 5*Math.sin(Math::PI - Math::PI * angle / 180) if ball.x <= 790
-          ball.y += 5*Math.cos(Math::PI - Math::PI * angle / 180) if ball.y <= 585
+          move_fourth ball, 5
+          move_fourth ball, 100 if window.button_down? Gosu::KbD
         end
       end
     end
+  end
+
+  #move in first
+  def move_first object, px
+    object.x += px * Math.sin(Math::PI * angle / 180) if object.x <= 790
+    object.y -= px * Math.cos(Math::PI * angle / 180) if object.y >= 5
+  end
+
+  #move in second
+  def move_second object, px
+    object.x -= px * Math.sin(2*Math::PI - Math::PI * angle / 180) if object.x >= 5
+    object.y -= px * Math.cos(2*Math::PI - Math::PI * angle / 180) if object.y >= 5
+  end
+
+  #move in third
+  def move_third object, px
+    object.x -= px * Math.sin(Math::PI * angle / 180 - Math::PI) if object.x >= 5
+    object.y += px * Math.cos(Math::PI * angle / 180 - Math::PI) if object.y <= 590
+  end
+
+  #move in fourth
+  def move_fourth object, px
+    object.x -= px * Math.sin(Math::PI * angle / 180 - Math::PI) if object.x >= 5
+    object.y += px * Math.cos(Math::PI * angle / 180 - Math::PI) if object.y <= 590
   end
 
   #face
