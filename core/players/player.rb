@@ -63,28 +63,28 @@ class Player
   #run with ball
   def run_with_ball
     ball = window.world.ball
-    if Gosu::distance(ball.x, ball.y, x, y) <= 10
+    if Gosu::distance(ball.x, ball.y, x, y) <= 13
       case face
       when 'first'
-        if x <= ball.x && y >= ball.y
-         move_first ball, 5
-         move_first ball, 100 if window.button_down? Gosu::KbD
-        end
+        ball.x = x + 3
+        ball.y = y - 10
+        move_first ball, 5
+        move_first ball, 100 if window.button_down? Gosu::KbD
       when 'second'
-        if x >= ball.x && y >= ball.y
-          move_second ball, 5
-          move_second ball, 100 if window.button_down? Gosu::KbD
-        end
+        ball.x = x - 15
+        ball.y = y - 15
+        move_second ball, 5
+        move_second ball, 100 if window.button_down? Gosu::KbD
       when 'third'
-        if x >= ball.x && y <= ball.y
-          move_third ball, 5
-          move_third ball, 100 if window.button_down? Gosu::KbD
-        end
+        ball.x = x - 2
+        ball.y = y + 2
+        move_third ball, 2
+        move_third ball, 100 if window.button_down? Gosu::KbD
       when 'fourth'
-        if x <= ball.x && y <= ball.y
-          move_fourth ball, 5
-          move_fourth ball, 100 if window.button_down? Gosu::KbD
-        end
+        ball.x = x + 1
+        ball.y = y + 1
+        move_fourth ball, 2
+        move_fourth ball, 100 if window.button_down? Gosu::KbD
       end
     end
   end
