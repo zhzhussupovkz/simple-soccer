@@ -7,10 +7,11 @@
 #Player
 class Player
 
-  def initialize window, team, x, y, role
-    @window, @team, @x, @y, @role = window, team, x, y, role
+  def initialize window, team, x, y
+    @window, @team, @x, @y = window, team, x, y
     @angle, @me = 90, false
-    @image = Gosu::Image.new(window, "images/teams/"+ @team +".png", true)
+    team_name = @team.name
+    @image = Gosu::Image.new(window, "images/teams/"+ team_name +".png", true)
   end
 
   attr_reader :window, :me

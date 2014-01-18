@@ -14,6 +14,10 @@ class Team
 
   attr_reader :name, :players
 
+  def generate_player player
+    @players << player
+  end
+
   def draw
     @players.each do |e| e.draw end
   end
